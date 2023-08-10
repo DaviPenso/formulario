@@ -1,26 +1,36 @@
 <?php
 
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
-echo "<hr>";
+$nome = "Felipe";
 
-$nome = $_POST['nome'];
-$email = $_POST['email'];
-$assunto = $_POST['assunto'];
-$mensagem = $_POST['mensagem'];
+if ($nome === "Felipe") {
+    $response = [
+        "nomeCompleto" => "Felipe Fernandes Campelo",
+        "idade" => 35,
+        "sexo" => "Masculino",
+        "endereco" => [
+            "logradouro" => "Rodovia Municipal dos Andradas"
+        ],
+    ];
 
-echo "Nome: {$nome}<br>";
-echo "Email: {$email}<br>";
-echo "Assunto: {$assunto}<br>";
-echo "Mensagem: {$mensagem}";
+    // for ($i = 0; $i <= 10; $i++) {
+    //     echo $i;
+    // }
 
-try {
-    if (!mail($email, $assunto, $mensagem)) {
-        echo "<div style='margin-top: 20px; background: #eee; padding: 1rem;'>
-            Erro ao enviar email
-        </div>";
+    $evangelhos = [
+        "Mateus" => 1,
+        "João" => 4,
+        "Lucas" => 3,
+        "Marcos" => 2,
+    ];
+    
+    foreach ($evangelhos as $evangelho => $ordem) {
+        echo "O evangelho de {$evangelho} é o livro número {$ordem} no Novo Testamento. <br>";
     }
-} catch(Exception $e) {
-    echo "<div style='margin-top: 20px; background: #eee; padding: 1rem;'>" . $e->getMessage() . "</div>";
+    
+    echo "<br><br>";
+    
+    asort($evangelhos); // Ordenacao pelo value
+    foreach ($evangelhos as $evangelho => $ordem) {
+        echo "O evangelho de {$evangelho} é o livro número {$ordem} no Novo Testamento. <br>";
+    }
 }

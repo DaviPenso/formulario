@@ -3,7 +3,7 @@
 }
 
 .panel-primary {
-    background: #f4f4f4;
+    background: var(--bs-gray-100);
     padding: 2rem;
     border-radius: .375rem;
 }

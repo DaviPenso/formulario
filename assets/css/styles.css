@@ -1,13 +1,3 @@
-.form-contato .form-group {
-    margin-bottom: 10px;
-}
-
-.panel-primary {
-    background: var(--bs-gray-100);
-    padding: 2rem;
-    border-radius: .375rem;
-}
-
 #mensagem-sucesso {
     display: none;
 }

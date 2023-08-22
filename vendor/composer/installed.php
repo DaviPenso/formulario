@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'd41a507ec829b24654e0b66aab7402f2d13b9605',
+        'reference' => 'c099e9946e7d3f02b9b7b1b2d1d8fca773cd5f32',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'd41a507ec829b24654e0b66aab7402f2d13b9605',
+            'reference' => 'c099e9946e7d3f02b9b7b1b2d1d8fca773cd5f32',
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(

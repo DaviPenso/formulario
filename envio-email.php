@@ -1,7 +1,9 @@
 <?php
 
-include "MySQL.php";
+/* Cadastro no Banco de Dados */
+include "MySQL.php"; // Classe que implementa a classe nativa do PHP para manipulacao do MySQL (mysqli)
 
+// Dados para conexao com o banco de dados em uma array
 $connData = [
     "dbserver" => "localhost",
     "username" => "root",
@@ -9,28 +11,73 @@ $connData = [
     "database" => "aula_php_email",
 ];
 
-$remetenteNome = "Felipe Campelo";
-$remetenteEmail = "felipefcamp@gmail.com";
-$destinatarioNome = $_POST['nome'];
-$destinatarioEmail = $_POST['email'];
+// Dados do formulario
+$nome = $_POST['nome'];
+$email = $_POST['email'];
 $assunto = $_POST['assunto'];
 $mensagem = $_POST['mensagem'];
 
-$addEnvio = new MySQL($connData);
-
+$addEnvio = new MySQL($connData); // Instancia a classe, criando um objeto
 $insertQuery = "INSERT INTO 
-                    envios(remetente_nome, remetente_email, destinatario_nome, destinatario_email, assunto, mensagem)
+                    envios(nome, email, assunto, mensagem)
                 VALUES 
-                    ('{$remetenteNome}', '{$remetenteEmail}', '{$destinatarioNome}', '{$destinatarioEmail}', '{$assunto}', '{$mensagem}')";
-
+                    ('{$nome}', '{$email}', '{$assunto}', '{$mensagem}')";
 $addEnvioResult = $addEnvio->Query($insertQuery);
 
 if ($addEnvioResult === false) {
     echo "Tivemos um problema no momento de inserir no banco de dados.";
+    exit;
 }
 
+/* -------------------------------------------------------------------------------------------------------- */
+
 /* Envio do Email */
-//.....
+include 'vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+$mail = new PHPMailer(true); // Instancia a classe e cria um objeto
+
+try {
+    //Server settings
+    $mail->isSMTP();
+    $mail->SMTPDebug  = 4;
+    $mail->Host       = 'smtp.hostinger.com';
+    $mail->Port       = 587;
+    $mail->SMTPAuth   = true;
+    $mail->Username   = 'noreply@sabercristao.com.br';
+    $mail->Password   = 'Noreply159753@!';
+    
+    //Recipients
+    $mail->setFrom("noreply@sabercristao.com.br", "Saber Cristão | Não responda!!");
+    $mail->addAddress("felipefcamp@gmail.com", "Felipe Campelo");
+    $mail->addCC('felipefcampdev@gmail.com');
+
+    //Content
+    $dataHoje = date("d/m/Y") . " às " . date("H:i:s");
+
+    $mail->isHTML(true);
+    $mail->Subject = "Mensagem do site";
+    $mail->CharSet = 'UTF-8';
+    $mail->Body    = "
+        <h2>Mensagem enviada do site</h2>
+        <p>Nome: {$nome}</p>
+        <p>Email: {$email}</p>
+        <p>Assunto: {$assunto}</p>
+        <p>Mensagem: {$mensagem}</p>
+
+        <br><br>
+
+        Email enviado em {$dataHoje}
+    ";
+
+    $mail->send();
+    echo 'Mensagem enviada com sucesso!';
+} catch (Exception $e) {
+    echo "A mensagem não pôde ser enviada. Erro: {$mail->ErrorInfo}";
+}
 
 // $nome = "Felipe";
 

@@ -1,34 +1,24 @@
 <?php
 
 /* Cadastro no Banco de Dados */
-include "MySQL.php"; // Classe que implementa a classe nativa do PHP para manipulacao do MySQL (mysqli)
-
-// Dados para conexao com o banco de dados em uma array
-$connData = [
-    "dbserver" => "localhost",
-    "username" => "root",
-    "password" => "",
-    "database" => "aula_php_email",
-];
+include "Email.php"; // Classe que implementa a inclusao do registro no banco de dados
 
 // Dados do formulario
-$nome = $_POST['nome'];
-$email = $_POST['email'];
-$assunto = $_POST['assunto'];
+$nome     = $_POST['nome'];
+$email    = $_POST['email'];
+$assunto  = $_POST['assunto'];
 $mensagem = $_POST['mensagem'];
 
-$addEnvio = new MySQL($connData); // Instancia a classe, criando um objeto
-$insertQuery = "INSERT INTO 
-                    envios(nome, email, assunto, mensagem)
-                VALUES 
-                    ('{$nome}', '{$email}', '{$assunto}', '{$mensagem}')";
-$addEnvioResult = $addEnvio->Query($insertQuery);
+/* Uso da classe de envio de email */
+/* Nesse ponto somente para adicionar ao banco de dados */
+$addEmailBD = new Email($nome, $email, $assunto, $mensagem); // Objeto
+$addEmailBDResult = $addEmailBD->addBD();
 
-if ($addEnvioResult === false) {
+if ($addEmailBDResult === false) {
     echo "Tivemos um problema no momento de inserir no banco de dados.";
     exit;
 }
-
+exit;
 /* -------------------------------------------------------------------------------------------------------- */
 
 /* Envio do Email */
